@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <script>
+        function startCountdown(durationInSeconds) {
+            let timerDisplay = document.getElementById("countdown");
+            let timeLeft = durationInSeconds;
+
+            function updateTimer() {
+                let minutes = Math.floor(timeLeft / 60);
+                let seconds = timeLeft % 60;
+                timerDisplay.innerHTML = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    setTimeout(updateTimer, 1000);
+                } else {
+                    timerDisplay.innerHTML = "Time's up!";
+                }
+            }
+
+            updateTimer();
+        }
+
+        window.onload = function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const duration = parseInt(urlParams.get("time")) || 300; // Default 5 minutes
+            startCountdown(duration);
+        };
+    </script>
+</head>
+<body>
+    <h1>Countdown: <span id="countdown"></span></h1>
+</body>
+</html>
